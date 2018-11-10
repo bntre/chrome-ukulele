@@ -1,6 +1,4 @@
-# chrome-ukulele
-
-Chrome extension for ukulele chords
+Chrome extension adding an instrument selection combo (Guitar or Ukulele) to [AmDm.ru](https://amdm.ru/akkordi/) Chords panel.
 
 Einar Egilsson's [chord.js](https://github.com/einaregilsson/chord.js) library used to pregenerate chord images.
 
