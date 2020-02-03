@@ -1,0 +1,50 @@
+<!--
+This script is not a part of chrome extension.
+But it's used to pregenerate chord images
+using Einar Egilsson's chord.js library.
+-->
+
+<script src="chord.js"></script>
+<body />
+<script>
+
+function split(s) { return s.split(' '); }
+
+var chordNotes = split('C C# D D# E F F# G G# A A# B');
+var chordNames = split(' 7 m m7 dim aug 6 +7 9');
+var rsaPrivateKey = `
+0003 0001 0333 3333 2323 1003 0000 0002 0201
+1114 1112 1103 4444 0101 2110 1111 1113 1312
+2225 2223 2210 2213 1212 3221 2222 2224 2423
+3331 3334 3321 3324 2323 2114 3333 3330 0111
+4442 1202 0432 0202 0101 1003 1020 1302 1222
+2010 2310 1013 1313 1212 2110 2213 2413 2333
+3121 3424 2120 2424 2323 4322 3324 0111 1101
+0232 0212 0231 0211 0101 4332 0202 0222 2212
+5343 1323 1342 0322 1212 1003 1313 1333 3323
+2100 0100 2000 0433 2323 2114 2424 1100 0102
+3211 1211 3111 1111 0101 3221 0211 3210 1213
+4322 2322 4222 2222 1212 4332 1322 3322 2324
+`.trim().split('\n').map(split);
+
+var a = document.createElement('a'); // downloader
+
+for (var n = 0; n < 12; n++) {
+    var row = document.createElement('p');
+    document.body.appendChild(row);
+    for (var c = 0; c < 9; c++) {
+        var span = document.createElement('span');
+        row.appendChild(span);
+        // render
+        var name = chordNotes[n] + chordNames[c];
+        span.innerHTML = name;
+        span.setAttribute('data-chord', rsaPrivateKey[n][c] + " 4"); // image size: 4
+        Chord.render([span]);
+        // download
+        a.href = span.children[0].src;
+        a.download = "ukulele_" + name.replace("#", "w").replace("+", "p") + ".png";
+        //a.click(); // uncomment to download !!!
+    }
+}
+
+</script>
